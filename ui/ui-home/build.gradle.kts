@@ -1,57 +1,72 @@
 plugins {
+    alias(libs.plugins.kmp.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kmp.skie)
+    alias(libs.plugins.kmpNativeCoroutines)
+}
+
+kotlin {
+    task("testClasses")
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "11"
+            }
+        }
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Shared"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.navigation.compose)
+            implementation(project(":domain:domain-common"))
+            implementation(project(":shared:ui-shared:ui-home-shared"))
+            implementation(project(":ui:ui-common"))
+            implementation(project(":shared:domain-shared:domain-shared-home"))
+            implementation(project(":shared:domain-shared:domain-shared-common"))
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.androidx.animation.graphics.android)
+            api(libs.kmm.viewmodel)
+        }
+        iosMain.dependencies {
+        }
+        commonMain.dependencies {
+        }
+
+        // Required by KMM-ViewModel
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+    }
 }
 
 android {
     namespace = "app.mistercooper.ui.home"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    defaultConfig {
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.12"
     }
-}
 
-dependencies {
-    implementation(project(":ui:ui-common"))
-    implementation(project(":domain:domain-home"))
-    //hilt ui
-    implementation(libs.dagger.hilt.android)
-    api(libs.dagger.hilt.android.compose)
-    api(libs.dagger.hilt.android.navigation)
-    ksp (libs.dagger.hilt.android.compiler)
-    ksp (libs.dagger.hilt.compiler)
-
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
 }

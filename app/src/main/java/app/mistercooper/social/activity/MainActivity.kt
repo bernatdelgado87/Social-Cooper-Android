@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import app.mistercooper.ui.common.navigation.GlobalNavigator
@@ -17,14 +16,12 @@ import app.mistercooper.social.theme.SocialCooperAndroidTheme
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.navigation.CustomNavigator
 import app.mistercooper.ui.common.navigation.NavigationRoute
-import app.mistercooper.ui.common.viewModel.MainViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import app.mistercooper.ui_main_shared.MainViewModel
+import org.koin.android.ext.android.get
+import org.koin.androidx.compose.koinViewModel
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var customNavigator: CustomNavigator
+    val customNavigator: CustomNavigator = get()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -36,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val nativeNavController = rememberNavController()
 
-                    val viewModel = hiltViewModel<MainViewModel>()
+                    val viewModel: MainViewModel = koinViewModel()
                     val state = viewModel.isRgisteredState.collectAsState()
 
                     state.value?.let { isRegistered ->
@@ -61,12 +58,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-
-
-
-
-
-
-

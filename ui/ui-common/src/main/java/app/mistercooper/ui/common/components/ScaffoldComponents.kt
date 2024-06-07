@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import app.mistercooper.ui.common.R
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import kotlinx.coroutines.launch
@@ -76,7 +75,7 @@ fun CommonScaffoldTopBar(globalNavigator: GlobalNavigator, topBarTitle: String, 
 }
 
 @Composable
-fun CommonScaffoldBottomBar(globalNavigator: GlobalNavigator, content: @Composable (modifier: Modifier) -> Unit, showError: Boolean, actionFloatingButton: () -> Unit, iconVectorFloatingButton: ImageVector) {
+fun CommonScaffoldBottomBar(content: @Composable (modifier: Modifier) -> Unit, showError: Boolean, actionFloatingButton: () -> Unit, iconVectorFloatingButton: ImageVector) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(

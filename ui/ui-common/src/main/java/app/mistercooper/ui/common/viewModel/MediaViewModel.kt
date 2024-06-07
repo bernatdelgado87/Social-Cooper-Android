@@ -5,16 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.mistercooper.domain.common.feature.media.usecase.GetImageFromUriUseCase
 import app.mistercooper.domain.common.feature.media.usecase.GetMediaImagesFromDeviceUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.io.File
-import javax.inject.Inject
 
-@HiltViewModel
-class MediaViewModel @Inject constructor(
+class MediaViewModel(
     private val getMediaImagesFromDeviceUseCase: GetMediaImagesFromDeviceUseCase,
     private val getImageFromUriUseCase: GetImageFromUriUseCase,
 ) : ViewModel() {

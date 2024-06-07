@@ -1,7 +1,6 @@
 package app.mistercooper.ui.common.components
 
 import android.Manifest
-import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -34,23 +33,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
-import androidx.hilt.navigation.compose.hiltViewModel
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.R
+import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.utils.checkCustomPermission
 import app.mistercooper.ui.common.utils.createImageFile
 import app.mistercooper.ui.common.utils.requestCameraPermission
 import app.mistercooper.ui.common.viewModel.MediaViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 import java.util.Objects
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectSourceBottomSheet(
-    buildConfigFieldsProvider: BuildConfigFieldsProvider,
     onDismiss: () -> Unit
 ) {
-    val mediaViewModel = hiltViewModel<MediaViewModel>()
+    val mediaViewModel: MediaViewModel = koinViewModel()
+    val buildConfigFieldsProvider: BuildConfigFieldsProvider = koinInject()
 
     var launchCamera by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()

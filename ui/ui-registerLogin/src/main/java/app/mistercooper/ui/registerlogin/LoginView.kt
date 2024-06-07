@@ -22,19 +22,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import app.mistercooper.ui.common.components.CommonScaffoldTopBar
 import app.mistercooper.ui.common.components.CustomTextField
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.components.TextType
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.ui.common.utils.restartCurrentActivity
-import app.mistercooper.ui.registerlogin.viewmodel.RegisterLoginViewModel
+import app.mistercooper.ui.register.R
+import app.mistercooper.ui_registerlogin_shared.viewmodel.RegisterLoginViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(globalNavigator: GlobalNavigator) {
-    val viewModel = hiltViewModel<RegisterLoginViewModel>()
+    val viewModel : RegisterLoginViewModel = koinViewModel()
     val state = viewModel.registerLoginState.collectAsState()
 
     var canActivateButton by remember { mutableStateOf(false) }

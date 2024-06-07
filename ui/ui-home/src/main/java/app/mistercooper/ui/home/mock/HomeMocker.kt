@@ -1,7 +1,7 @@
 package app.mistercooper.ui.home.mock
 
 import app.mistercooper.domain.home.model.PostModel
-import app.mistercooper.domain.common.feature.user.model.UserModel
+import app.mistercooper.domain_shared_common.user.model.UserModel
 
 
 fun mockPosts() = listOf(

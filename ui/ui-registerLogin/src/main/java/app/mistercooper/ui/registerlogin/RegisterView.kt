@@ -31,25 +31,26 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.components.CommonScaffoldTopBar
 import app.mistercooper.ui.common.components.CustomTextField
 import app.mistercooper.ui.common.components.LoadingComponent
+import app.mistercooper.ui.common.components.SelectSourceBottomSheet
 import app.mistercooper.ui.common.components.TextType
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.ui.common.utils.restartCurrentActivity
 import app.mistercooper.ui.common.viewModel.MediaViewModel
-import app.mistercooper.ui.registerlogin.viewmodel.RegisterLoginViewModel
+import app.mistercooper.ui.register.R
+import app.mistercooper.ui_registerlogin_shared.viewmodel.RegisterLoginViewModel
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
     globalNavigator: GlobalNavigator,
     ) {
-    val viewModel = hiltViewModel<RegisterLoginViewModel>()
+    val viewModel: RegisterLoginViewModel = koinViewModel()
     val state = viewModel.registerLoginState.collectAsState()
-    val mediaViewModel = hiltViewModel<MediaViewModel>()
+    val mediaViewModel: MediaViewModel = koinViewModel()
     val selectedFileState = mediaViewModel.selectedFile.collectAsState()
 
     var userName by remember { mutableStateOf("") }
@@ -85,7 +86,7 @@ fun RegisterScreen(
                         text = stringResource(R.string.registration_registrate_now_title),
                         style = MaterialTheme.typography.headlineLarge
                     )
-                    SelectMediaComponent(viewModel.buildConfigFieldsProvider)
+                    SelectMediaComponent()
                     CustomTextField(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -151,15 +152,12 @@ fun RegisterScreen(
 }
 
 @Composable
-fun SelectMediaComponent(
-    buildConfigFieldsProvider: BuildConfigFieldsProvider,
-) {
-    val mediaViewModel = hiltViewModel<MediaViewModel>()
+fun SelectMediaComponent() {
+    val mediaViewModel: MediaViewModel = koinViewModel()
     var showSheetSourceSelection by remember { mutableStateOf(false) }
 
     if (showSheetSourceSelection) {
-        app.mistercooper.ui.common.components.SelectSourceBottomSheet (
-            buildConfigFieldsProvider
+        SelectSourceBottomSheet (
         ){
             showSheetSourceSelection = false
         }

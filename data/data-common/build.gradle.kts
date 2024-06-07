@@ -1,10 +1,58 @@
 plugins {
+    alias(libs.plugins.kmp.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kspAndroid)
+    alias(libs.plugins.kmpNativeCoroutines)
+    alias(libs.plugins.kmp.skie)
 }
+
+kotlin {
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "11"
+            }
+        }
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Shared"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(project(":domain:domain-common"))
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.androidx.compose)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+        commonMain.dependencies {
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.koin.core)
+            implementation(libs.skie.annotations)
+        }
+
+        // Required by KMM-ViewModel
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+        }
+    }
+}
+
 
 android {
     namespace = "app.mistercooper.data.common"
@@ -12,6 +60,7 @@ android {
 
     defaultConfig {
         minSdk = 24
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -19,42 +68,11 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
 
-dependencies {
-    implementation(project(":domain:domain-common"))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-
-    //log interceptor
-    api (libs.okhttp.logging)
-
-    //Retrofit
-    api (libs.retrofit)
-    api (libs.retrofit.gson)
-    //Serialization
-    api(libs.kotlin.serialization)
-
-    //Hilt
-    implementation(libs.dagger.hilt.android)
-    ksp (libs.dagger.hilt.android.compiler)
-    ksp (libs.dagger.hilt.compiler)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

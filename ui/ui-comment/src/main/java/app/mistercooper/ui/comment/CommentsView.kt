@@ -51,13 +51,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import app.mistercooper.domain.comment.model.CommentModel
-import app.mistercooper.ui.comment.model.PublishCommentUiModel
-import app.mistercooper.ui.comment.viewmodel.CommentViewModel
 import app.mistercooper.ui.common.utils.toPx
+import app.mistercooper.ui_comment_shared.model.PublishCommentUiModel
+import app.mistercooper.ui_comment_shared.viewmodel.CommentViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,7 +66,7 @@ fun CommentsBottomSheetScreen(
     writeNow: Boolean,
     onDismiss: () -> Unit
 ) {
-    val viewModel = hiltViewModel<CommentViewModel>()
+    val viewModel : CommentViewModel = koinViewModel()
     val viewModelState = viewModel.commentUiModel.collectAsState()
 
     val modalBottomSheetState = rememberModalBottomSheetState()
@@ -118,7 +118,12 @@ fun CommentsBottomSheetScreen(
                     }
                 }
             }
-            CommentsFooterComponent(postId, modalHeight, modalBottomSheetState, writeNow, viewModelState.value)
+            CommentsFooterComponent(postId, modalHeight, modalBottomSheetState, writeNow, viewModelState.value) { text, id ->
+                viewModel.publishComment(
+                    text,
+                    id
+                )
+            }
         }
     }
 }
@@ -168,9 +173,9 @@ fun CommentsFooterComponent(
     modalHeight: Int,
     modalBottomSheetState: SheetState,
     showKeyboard: Boolean,
-    uiState: PublishCommentUiModel
+    uiState: PublishCommentUiModel,
+    publishComment: (commentText: String, postId: Long) -> Unit
 ) {
-    val viewModel = hiltViewModel<CommentViewModel>()
 
     var footerHeight by remember { mutableStateOf(0) }
     val bottomPadding = ButtonDefaults.MinHeight.toPx()
@@ -221,7 +226,7 @@ fun CommentsFooterComponent(
                             .align(Alignment.CenterVertically)
                             .clickable {
                                 focusManager.clearFocus()
-                                viewModel.publishComment(commentText, postId)
+                                publishComment(commentText, postId)
                             }
                     )
                 }

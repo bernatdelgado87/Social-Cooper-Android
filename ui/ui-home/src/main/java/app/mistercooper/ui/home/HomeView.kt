@@ -30,9 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import app.mistercooper.domain.common.feature.user.model.UserModel
 import app.mistercooper.domain.home.model.PostModel
+import app.mistercooper.domain_shared_common.user.model.UserModel
 import app.mistercooper.ui.common.components.CommonScaffoldBottomBar
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.navigation.ArgumentNavigatorWrapper
@@ -43,21 +42,22 @@ import app.mistercooper.ui.common.navigation.CommentNavigationArgs.Companion.WRI
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.ui.common.navigation.NavigationRoute
 import app.mistercooper.ui.common.navigation.navigate
-import app.mistercooper.ui.home.viewmodel.HomeViewModel
+import app.mistercooper.ui_home_shared.viewmodel.HomeViewModel
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(globalNavigator: GlobalNavigator) {
-    val viewModel = hiltViewModel<HomeViewModel>()
+    val viewModel: HomeViewModel = koinViewModel()
     val state = viewModel.homeUiModel.collectAsState()
 
     CommonScaffoldBottomBar(
-        globalNavigator = globalNavigator,
         content = { modifier ->
             HomeFeedView(
                 modifier = modifier,
                 globalNavigator = globalNavigator,
-                postModels = state.value.postModels
+                postModels = state.value.postModels,
+                publishLike = { id: Long, like: Boolean -> viewModel.publishLike(id, like) }
             )
             if (state.value.isLoading) {
                 LoadingComponent()
@@ -75,7 +75,8 @@ fun HomeScreen(globalNavigator: GlobalNavigator) {
 fun HomeFeedView(
     postModels: List<PostModel>?,
     globalNavigator: GlobalNavigator,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    publishLike: (id: Long, like: Boolean) -> Unit
 ) {
     postModels?.let { posts ->
         LazyColumn(modifier) {
@@ -107,7 +108,10 @@ fun HomeFeedView(
                             modifier = Modifier.padding(4.dp)
                         )
                     }
-                    InteractionIconsComponent(globalNavigator, post)
+                    InteractionIconsComponent(
+                        globalNavigator,
+                        post,
+                        { id, like -> publishLike(id, like) })
                     if (post.description?.isNotEmpty() == true) {
                         Text(
                             text = post.description!!,
@@ -157,9 +161,12 @@ fun UserComponent(userModel: UserModel) {
 }
 
 @Composable
-fun InteractionIconsComponent(globalNavigator: GlobalNavigator, post: PostModel) {
+fun InteractionIconsComponent(
+    globalNavigator: GlobalNavigator,
+    post: PostModel,
+    publishLike: (id: Long, like: Boolean) -> Unit
+) {
     Row {
-        val viewModel = hiltViewModel<HomeViewModel>()
         var showComments: Boolean by remember { mutableStateOf(false) }
         Icon(
             imageVector = if (post.hasLiked) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
@@ -167,7 +174,7 @@ fun InteractionIconsComponent(globalNavigator: GlobalNavigator, post: PostModel)
             modifier = Modifier
                 .padding(4.dp)
                 .clickable {
-                    viewModel.publishLike(post.id, !post.hasLiked)
+                    publishLike(post.id, !post.hasLiked)
                 }
         )
         Icon(

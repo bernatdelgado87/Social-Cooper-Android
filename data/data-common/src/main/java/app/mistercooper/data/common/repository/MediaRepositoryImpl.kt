@@ -4,12 +4,11 @@ import android.content.Context
 import android.net.Uri
 import app.mistercooper.data.common.local.LocalMediaDataSource
 import app.mistercooper.domain.common.feature.media.repository.MediaRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import java.io.File
 
-class MediaRepositoryImpl(@ApplicationContext private val context: Context) : MediaRepository {
+class MediaRepositoryImpl(context: Context) : MediaRepository {
     private val localMediaDataSource = LocalMediaDataSource(context)
 
     override suspend fun getSavedImages() {

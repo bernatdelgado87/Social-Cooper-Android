@@ -1,14 +1,72 @@
+
 plugins {
+    alias(libs.plugins.kmp.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.jetbrainsCompose)
     kotlin("plugin.serialization")
 }
+
+kotlin {
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "11"
+            }
+        }
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(project(":data:data-common"))
+            implementation(project(":domain:domain-common"))
+            implementation(project(":ui:ui-common"))
+            implementation(project(":ui:ui-home"))
+            implementation(project(":ui:ui-publish"))
+            implementation(project(":ui:ui-registerLogin"))
+            implementation(project(":ui:ui-comment"))
+            implementation(project.dependencies.platform(libs.androidx.compose.bom))
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.viewmodel.compose)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.coil.compose)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.runtime.ktx)
+        }
+        commonMain.dependencies {
+            implementation(project(":shared:data-shared:data-shared-comment"))
+            implementation(project(":shared:data-shared:data-shared-common"))
+            implementation(project(":shared:data-shared:data-shared-home"))
+            implementation(project(":shared:data-shared:data-shared-main"))
+            implementation(project(":shared:data-shared:data-shared-publish"))
+            implementation(project(":shared:data-shared:data-shared-register-login"))
+            implementation(project(":shared:domain-shared:domain-shared-comment"))
+            implementation(project(":shared:domain-shared:domain-shared-common"))
+            implementation(project(":shared:domain-shared:domain-shared-home"))
+            implementation(project(":shared:domain-shared:domain-shared-publish"))
+            implementation(project(":shared:domain-shared:domain-shared-register-login"))
+            implementation(project(":shared:ui-shared:ui-comment-shared"))
+            implementation(project(":shared:ui-shared:ui-home-shared"))
+            implementation(project(":shared:ui-shared:ui-main-shared"))
+            implementation(project(":shared:ui-shared:ui-publish-shared"))
+            implementation(project(":shared:ui-shared:ui-registerlogin-shared"))
+        }
+    }
+}
+
 
 android {
     namespace = "app.mistercooper.social"
     compileSdk = 34
+
+    sourceSets["main"].manifest.srcFile("src/main/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/main/res")
+    sourceSets["main"].resources.srcDirs("src/main/resources")
 
     defaultConfig {
         applicationId = "app.mistercooper.social"
@@ -33,14 +91,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.12"
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     buildFeatures {
@@ -53,35 +108,4 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-}
-
-dependencies {
-    implementation(project(":ui:ui-common"))
-    implementation(project(":ui:ui-home"))
-    implementation(project(":ui:ui-publish"))
-    implementation(project(":ui:ui-registerLogin"))
-    implementation(project(":ui:ui-comment"))
-    implementation(project(":data:data-main"))
-    implementation(project(":data:data-comment"))
-    implementation(project(":data:data-common"))
-    implementation(project(":data:data-home"))
-    implementation(project(":data:data-publish"))
-    implementation(project(":data:data-register-login"))
-    implementation(project(":domain:domain-comment"))
-    implementation(project(":domain:domain-common"))
-    implementation(project(":domain:domain-home"))
-    implementation(project(":domain:domain-publish"))
-    implementation(project(":domain:domain-register-login"))
-
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    //Hilt
-    implementation(libs.dagger.hilt.android)
-    implementation(libs.dagger.hilt.android.compose)
-    implementation(libs.dagger.hilt.android.navigation)
-    ksp (libs.dagger.hilt.android.compiler)
-    ksp (libs.dagger.hilt.compiler)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

@@ -8,7 +8,7 @@
     <uses-feature android:name="android.hardware.camera.any"/>
 
     <application
-        android:name=".application.HiltApplication"
+        android:name=".application.KoinApplication"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

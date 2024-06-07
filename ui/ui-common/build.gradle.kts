@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
 }
 
@@ -30,14 +29,14 @@ android {
         buildConfig = true
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.12"
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
     allprojects {
@@ -49,12 +48,8 @@ android {
         api(libs.material)
         //remote image
         api(libs.coil)
-        //hilt ui
-        implementation(libs.dagger.hilt.android)
-        api(libs.dagger.hilt.android.compose)
-        api(libs.dagger.hilt.android.navigation)
-        ksp (libs.dagger.hilt.android.compiler)
-        ksp (libs.dagger.hilt.compiler)
+        implementation(libs.koin.androidx.compose)
+        implementation(libs.androidx.navigation.compose)
 
         //todo check this
         api(libs.androidx.activity.compose)

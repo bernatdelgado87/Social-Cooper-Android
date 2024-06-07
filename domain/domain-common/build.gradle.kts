@@ -13,11 +13,8 @@ java {
 dependencies {
     //coroutines
     api(libs.kotlinx.coroutines)
-    //Hilt Domain
-    implementation(libs.dagger.hilt.core)
-    ksp(libs.dagger.hilt.core.compiler)
-
     //todo android for URI
     //implementation(libs.android.library)
+    implementation(libs.koin.core)
 
 }

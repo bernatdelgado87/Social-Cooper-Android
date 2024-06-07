@@ -31,16 +31,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.R.drawable.ic_add_photo
 import app.mistercooper.ui.common.components.CommonScaffoldTopBar
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.components.SelectSourceBottomSheet
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.ui.common.utils.restartCurrentActivity
-import app.mistercooper.ui.publish.viewmodel.PublishViewModel
+import app.mistercooper.ui.common.viewModel.MediaViewModel
+import app.mistercooper.ui_sharedui_publish_shared.viewmodel.PublishViewModel
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PublishHomeScreen(
@@ -49,10 +49,10 @@ fun PublishHomeScreen(
     var canActivateButton by remember { mutableStateOf(false) }
     var text by remember { mutableStateOf("") }
 
-    val publishViewModel = hiltViewModel<PublishViewModel>()
+    val publishViewModel: PublishViewModel = koinViewModel()
     val publishState = publishViewModel.publishUiModelState.collectAsState()
 
-    val mediaViewModel = hiltViewModel<app.mistercooper.ui.common.viewModel.MediaViewModel>()
+    val mediaViewModel: MediaViewModel = koinViewModel()
 
     if (publishState.value.postPublishedSuccess) {
         val context = LocalContext.current
@@ -64,7 +64,6 @@ fun PublishHomeScreen(
         content = { modifier ->
             PublishPostContentView(
                 modifier = modifier,
-                publishViewModel.buildConfigFieldsProvider,
                 { canActivateButton = it },
                 { newText -> text = newText }
             )
@@ -92,7 +91,6 @@ fun PublishHomeScreen(
 @Composable
 fun PublishPostContentView(
     modifier: Modifier,
-    buildConfigFieldsProvider: BuildConfigFieldsProvider,
     canActivateButton: (canActivateButton: Boolean) -> Unit,
     onTextChanged: (text: String) -> Unit
 ) {
@@ -102,7 +100,7 @@ fun PublishPostContentView(
             modifier = Modifier
                 .fillMaxHeight()
         ) {
-            SelectMediaComponent(buildConfigFieldsProvider) { isFileSelected ->
+            SelectMediaComponent() { isFileSelected ->
                 canActivateButton(
                     isFileSelected
                 )
@@ -126,15 +124,13 @@ fun PublishPostContentView(
 
 @Composable
 fun SelectMediaComponent(
-    buildConfigFieldsProvider: BuildConfigFieldsProvider,
     onFileSelected: (isFileSelected: Boolean) -> Unit
 ) {
-    val mediaViewModel = hiltViewModel<app.mistercooper.ui.common.viewModel.MediaViewModel>()
+    val mediaViewModel: MediaViewModel = koinViewModel()
     var showSheetSourceSelection by remember { mutableStateOf(false) }
 
     if (showSheetSourceSelection) {
         SelectSourceBottomSheet(
-            buildConfigFieldsProvider
         ) { showSheetSourceSelection = false }
     }
     Box(
