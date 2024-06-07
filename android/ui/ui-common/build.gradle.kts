@@ -42,7 +42,7 @@ android {
     allprojects {
     dependencies {
 
-        implementation(project(":domain:domain-common"))
+        implementation(project(":android:domain:domain-common"))
         api(libs.androidx.core.ktx)
         api(libs.androidx.appcompat)
         api(libs.material)

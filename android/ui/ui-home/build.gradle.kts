@@ -29,10 +29,11 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(project(":domain:domain-common"))
-            implementation(project(":shared:ui-shared:ui-publish-shared"))
-            implementation(project(":ui:ui-common"))
-            implementation(project(":shared:domain-shared:domain-shared-publish"))
+            implementation(libs.androidx.navigation.compose)
+            implementation(project(":android:domain:domain-common"))
+            implementation(project(":shared:ui-shared:ui-home-shared"))
+            implementation(project(":android:ui:ui-common"))
+            implementation(project(":shared:domain-shared:domain-shared-home"))
             implementation(project(":shared:domain-shared:domain-shared-common"))
             implementation(libs.koin.androidx.compose)
             implementation(libs.androidx.animation.graphics.android)
@@ -51,7 +52,7 @@ kotlin {
 }
 
 android {
-    namespace = "app.mistercooper.ui.publish"
+    namespace = "app.mistercooper.ui.home"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

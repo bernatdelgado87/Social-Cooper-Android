@@ -30,7 +30,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
-            implementation(project(":domain:domain-common"))
+            implementation(project(":android:domain:domain-common"))
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

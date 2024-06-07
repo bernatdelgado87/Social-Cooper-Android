@@ -29,7 +29,7 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(project(":domain:domain-common"))
+            implementation(project(":android:domain:domain-common"))
             implementation(project(":shared:domain-shared:domain-shared-register-login"))
 
         }

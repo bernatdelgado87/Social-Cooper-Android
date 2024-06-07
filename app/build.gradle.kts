@@ -17,13 +17,13 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(project(":data:data-common"))
-            implementation(project(":domain:domain-common"))
-            implementation(project(":ui:ui-common"))
-            implementation(project(":ui:ui-home"))
-            implementation(project(":ui:ui-publish"))
-            implementation(project(":ui:ui-registerLogin"))
-            implementation(project(":ui:ui-comment"))
+            implementation(project(":android:data:data-common"))
+            implementation(project(":android:domain:domain-common"))
+            implementation(project(":android:ui:ui-common"))
+            implementation(project(":android:ui:ui-home"))
+            implementation(project(":android:ui:ui-publish"))
+            implementation(project(":android:ui:ui-registerLogin"))
+            implementation(project(":android:ui:ui-comment"))
             implementation(project.dependencies.platform(libs.androidx.compose.bom))
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.activity.compose)
