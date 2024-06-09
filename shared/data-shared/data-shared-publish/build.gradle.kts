@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kspAndroid)
     alias(libs.plugins.kmpNativeCoroutines)
-    alias(libs.plugins.kmp.skie)
-
 }
 
 kotlin {
@@ -45,7 +43,6 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.koin.core)
-            implementation(libs.skie.annotations)
         }
 
         // Required by KMM-ViewModel
@@ -65,16 +62,11 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
