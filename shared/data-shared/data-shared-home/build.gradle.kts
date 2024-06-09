@@ -9,6 +9,7 @@ plugins {
 }
 
 kotlin {
+    task("testClasses")
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -62,8 +63,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 

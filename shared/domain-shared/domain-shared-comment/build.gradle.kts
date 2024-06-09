@@ -4,11 +4,10 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kspAndroid)
     alias(libs.plugins.kmpNativeCoroutines)
-    alias(libs.plugins.kmp.skie)
-
 }
 
 kotlin {
+    task("testClasses")
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -37,12 +36,6 @@ kotlin {
             implementation(project(":shared:domain-shared:domain-shared-common"))
             implementation(libs.koin.core)
         }
-
-        // Required by KMM-ViewModel
-        all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
-            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-        }
     }
 }
 
@@ -55,16 +48,11 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
