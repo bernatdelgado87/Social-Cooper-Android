@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="comment">Commentar</string>
-    <string name="like">Me gusta</string>
-    <string name="post_comments_total">Ver %d comentarios</string>
-    <string name="post_enter_text_hint">Escribe algo...</string>
-    <string name="post_like_people">%d me gusta</string>
-</resources>

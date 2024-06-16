@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common -->
+    <string name="add_photo_content_description">Añadir foto</string>
+    <string name="back">Volver</string>
+    <string name="error_message">Error: Algo ha salido mal</string>
+    <string name="image_selection_body">Puedes usar tu cámara o subir un archivo desde tu dispositivo</string>
+    <string name="image_selection_title">Selector de origen</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="publish_camera_option">Cámara</string>
+    <string name="publish_files_option">Archivos</string>
+    <!-- Register Login -->
+    <string name="login_button">Iniciar sesión</string>
+    <string name="login_now_title">Introduce tus credenciales</string>
+    <string name="login_now_toolbar_title">Iniciar sesión</string>
+    <string name="register_button">Registrar</string>
+    <string name="register_email">Correo electrónico</string>
+    <string name="register_name">Nombre de usuario</string>
+    <string name="register_now_title">¡Regístrate ahora!</string>
+    <string name="register_password">Contraseña</string>
+    <string name="registration_registrate_now_title">¡Regístrate ahora!</string>
+    <string name="register_toolbar_title">Registrar</string>
+    <string name="your_photo_content_description">Tu foto</string>
+</resources>

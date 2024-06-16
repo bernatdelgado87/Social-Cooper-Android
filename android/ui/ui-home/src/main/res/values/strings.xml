@@ -1,7 +1,0 @@
-<resources>
-    <string name="comment">Comment</string>
-    <string name="like">Like</string>
-    <string name="post_comments_total">See %d comments</string>
-    <string name="post_enter_text_hint">Write something...</string>
-    <string name="post_like_people">%d likes</string>
-</resources>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="comment">Comentario</string>
-    <string name="comment_hint">Escribe un comentario...</string>
-    <string name="comments_empty_body">Sé el primero en comentar</string>
-    <string name="comments_empty_title">Esto está muy vacío</string>
-    <string name="error_message">Error: Algo ha salido mal</string>
-</resources>

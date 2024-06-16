@@ -1,0 +1,39 @@
+<resources>
+    <!-- Common -->
+    <string name="add_photo_content_description">Add photo</string>
+    <string name="back">Back</string>
+    <string name="error_message">Error: Something has gone wrong</string>
+    <string name="image_selection_body">You can use your camera or upload a file from your device</string>
+    <string name="image_selection_title">Source selector</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="publish_camera_option">Camera</string>
+    <string name="publish_files_option">Files</string>
+    <string name="comment">Comment</string>
+    <!-- Register Login -->
+    <string name="login_button">Login</string>
+    <string name="login_now_title">Enter your credentials</string>
+    <string name="login_now_toolbar_title">Login</string>
+    <string name="register_button">Register</string>
+    <string name="register_email">Email</string>
+    <string name="register_name">Username</string>
+    <string name="register_now_title">Register now!</string>
+    <string name="register_password">Password</string>
+    <string name="registration_registrate_now_title">Register now!</string>
+    <string name="register_toolbar_title">Register</string>
+    <string name="your_photo_content_description">Your photo</string>
+    <!-- Home feed -->
+    <string name="like">Like</string>
+    <string name="post_comments_total">See %d comments</string>
+    <string name="post_like_people">%d likes</string>
+    <!-- Publish -->
+    <string name="add_photo_hint">Add your photo here</string>
+    <string name="post_enter_text_hint">Write something...</string>
+    <string name="publish_action_button">Publish</string>
+    <string name="publish_now_title">Publish</string>
+    <!-- Comment -->
+    <string name="comment_hint">Write a comment...</string>
+    <string name="comments_empty_body">Be the first to comment</string>
+    <string name="comments_empty_title">This is very empty</string>
+    <!-- Accessibility -->
+    <string name="select_image">Click to select image</string>
+</resources>

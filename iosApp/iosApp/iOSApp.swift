@@ -1,15 +1,15 @@
 import SwiftUI
-import Shared
+import ComposeApp
 
 @main
 struct iOSApp: App {
+
     init() {
         KoinKt.doInitKoin()
     }
-    
-    var body: some Scene {
-        WindowGroup {
-            ListView()            
-        }
-    }
+	var body: some Scene {
+		WindowGroup {
+			ContentView()
+		}
+	}
 }

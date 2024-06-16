@@ -46,5 +46,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+        <string>$(PRODUCT_NAME) Uses camera to setup profile picture of the user and upload pictures.</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>$(PRODUCT_NAME) Access photo library to setup profile picture of the user and upload pictures.</string>
 </dict>
 </plist>

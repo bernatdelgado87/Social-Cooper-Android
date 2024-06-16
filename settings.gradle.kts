@@ -1,16 +1,20 @@
+rootProject.name = "KotlinProject"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
             mavenContent {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroupAndSubgroups("com.google")
             }
         }
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositories {
         google {
@@ -24,43 +28,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Social Cooper Android"
-include(":app")
-include(":app:main")
-include(":shared")
-//shared data
-include(":shared:data-shared:data-shared-comment")
-include(":shared:data-shared:data-shared-common")
-include(":shared:data-shared:data-shared-main")
-include(":shared:data-shared")
-include(":shared:data-shared:data-shared-common")
-include(":shared:data-shared:data-shared-home")
-include(":shared:data-shared:data-shared-register-login")
-include(":shared:data-shared:data-shared-publish")
-//shared domain
-include(":shared:domain-shared")
-include(":shared:domain-shared:domain-shared-comment")
-include(":shared:domain-shared:domain-common")
-include(":shared:domain-shared:domain-shared-comment")
-include(":shared:domain-shared:domain-shared-home")
-include(":shared:domain-shared:domain-shared-register-login")
-include(":shared:domain-shared:domain-shared-publish")
-include(":shared:domain-shared:domain-shared-common")
-//shared ui
-include(":shared:ui-shared:ui-main-shared")
-include(":shared:ui-shared:ui-home-shared")
-include(":shared:ui-shared:ui-publish-shared")
-include(":shared:ui-shared:ui-registerlogin-shared")
-include(":shared:ui-shared:ui-comment-shared")
-//android data
-include(":android:data:data-common")
-//android domain
-include(":android:domain:domain-common")
-//android ui
-include(":shared:ui-shared")
-include(":android:ui:ui-registerLogin")
-include(":common-ui")
-include(":android:ui:ui-comment")
-include(":android:ui:ui-common")
-include(":android:ui:ui-home")
-include(":android:ui:ui-publish")
+include(":composeApp")
+include(":domainShared")
+include(":dataShared")

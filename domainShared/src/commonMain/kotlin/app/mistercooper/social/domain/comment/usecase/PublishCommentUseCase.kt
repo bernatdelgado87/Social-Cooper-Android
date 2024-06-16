@@ -1,0 +1,14 @@
+package app.mistercooper.social.domain.comment.usecase
+
+import app.mistercooper.social.domain.comment.model.CommentWrapperModel
+import app.mistercooper.social.domain.comment.repository.CommentRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
+class PublishCommentUseCase (val socialRepository: CommentRepository) {
+    operator fun invoke(params: PublishCommentParams): Flow<CommentWrapperModel> {
+        return flow { emit(socialRepository.publishComment(params.comment, params.postId, params.commentReferentId)) }
+    }
+
+    data class PublishCommentParams(val comment: String, val postId: Long, val commentReferentId: Int? = null)
+}
