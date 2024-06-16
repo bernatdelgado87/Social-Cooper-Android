@@ -10,6 +10,7 @@ import app.mistercooper.ui.registerlogin.RegisterScreen
 import common.navigation.GlobalNavigator
 import common.navigation.NavigationRoute
 import feed.HomeScreen
+import publish.PublishHomeScreen
 
 fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: GlobalNavigator) = run {
     composable(NavigationRoute.HOME_FEED.name) {
@@ -26,9 +27,9 @@ fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: GlobalNavigator) = run {
         )
     }
     composable(NavigationRoute.PUBLISH_NOW.name) {
-        /*PublishHomeScreen(
+        PublishHomeScreen(
             globalNavigator = globalNavigator
-        )*/
+        )
     }
 
 
