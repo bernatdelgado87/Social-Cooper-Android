@@ -1,4 +1,4 @@
-package app.mistercooper.data.register_login.remote.dto.response
+package app.mistercooper.social.data.user.remote.dto.response
 
 import kotlinx.serialization.Serializable
 

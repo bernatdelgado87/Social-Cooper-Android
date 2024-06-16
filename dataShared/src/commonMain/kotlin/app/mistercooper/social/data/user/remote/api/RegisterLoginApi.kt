@@ -1,7 +1,7 @@
 package app.mistercooper.social.data.user.remote.api
 
 import app.mistercooper.data.register_login.remote.dto.request.LoginRequestDTO
-import app.mistercooper.data.register_login.remote.dto.response.RegisterUserResponseDTO
+import app.mistercooper.social.data.user.remote.dto.response.RegisterUserResponseDTO
 import com.jetbrains.kmpapp.remote.api.CommonApi
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
