@@ -32,7 +32,11 @@ import androidx.compose.ui.unit.dp
 import app.mistercooper.domain_shared_common.user.model.UserModel
 import app.mistercooper.social.domain.home.model.PostModel
 import app.mistercooper.ui.common.components.LoadingComponent
+import coil3.ImageLoader
 import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.crossfade
+import coil3.util.DebugLogger
 import common.component.CommonScaffoldBottomBar
 import common.navigation.ArgumentNavigatorWrapper
 import common.navigation.BottomSheetRoute
@@ -88,6 +92,10 @@ fun HomeFeedView(
             items(posts) { post ->
                 Column(modifier = Modifier.fillMaxSize()) {
                     Box(modifier = Modifier.fillMaxSize()) {
+                        ImageLoader
+                            .Builder(LocalPlatformContext.current)
+                            .crossfade(true)
+                            .logger(DebugLogger()).build()
                         AsyncImage(
                             model = post.imageUrl,
                             contentDescription = "",

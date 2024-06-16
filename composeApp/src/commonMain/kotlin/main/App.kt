@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import app.mistercooper.social.navigation.getNavGraphBuilder
 import app.mistercooper.ui.common.components.LoadingComponent
+import coil3.compose.setSingletonImageLoaderFactory
 import common.navigation.CustomNavigator
 import common.navigation.GlobalNavigator
 import common.navigation.NavigationRoute
@@ -22,6 +23,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Preview
 fun App() {
     MaterialTheme {
+        setImageLoader()
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
