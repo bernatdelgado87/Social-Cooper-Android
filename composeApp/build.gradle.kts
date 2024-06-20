@@ -43,7 +43,6 @@ kotlin {
             implementation(libs.koin.composeVM)
             implementation(libs.koin.core)
             implementation(libs.lifecycle)
-            implementation(libs.material)
             implementation(libs.navigation.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -55,7 +54,8 @@ kotlin {
             implementation(libs.coil.compose.core)
             implementation(libs.coil.mp)
             implementation(libs.coil.network.ktor)
-            implementation(libs.coil.compose)}
+            implementation(libs.coil.compose)
+        }
     }
 }
 

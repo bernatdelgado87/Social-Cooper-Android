@@ -8,8 +8,5 @@ enum class NavigationRoute: Route {
     LOGIN_OR_REGISTER,
     LOGIN,
     REGISTER,
-}
-
-enum class BottomSheetRoute: Route {
     COMMENTS
 }

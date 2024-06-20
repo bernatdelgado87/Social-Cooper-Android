@@ -2,17 +2,18 @@ package app.mistercooper.social.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHost
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import app.mistercooper.ui.registerlogin.LoginOrRegisterScreen
 import app.mistercooper.ui.registerlogin.LoginScreen
 import app.mistercooper.ui.registerlogin.RegisterScreen
-import common.navigation.GlobalNavigator
+import comment.CommentsScreen
 import common.navigation.NavigationRoute
 import feed.HomeScreen
 import publish.PublishHomeScreen
 
-fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: GlobalNavigator) = run {
+fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: NavController) = run {
     composable(NavigationRoute.HOME_FEED.name) {
         HomeScreen(globalNavigator = globalNavigator)
     }
@@ -31,12 +32,19 @@ fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: GlobalNavigator) = run {
             globalNavigator = globalNavigator
         )
     }
-
-
     composable(NavigationRoute.LOGIN.name) {
         LoginScreen(
             globalNavigator = globalNavigator
         )
     }
+    composable(NavigationRoute.COMMENTS.name + "/{postId}") {
+        val args = listOf(navArgument("postId") {type = NavType.LongType})
+        val postId = requireNotNull(it.arguments?.getLong("postId"))
+        CommentsScreen(
+            postId,
+            true
+        )
+    }
+
 }
 

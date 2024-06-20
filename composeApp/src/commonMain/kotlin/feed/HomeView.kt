@@ -21,14 +21,11 @@ import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import app.mistercooper.domain_shared_common.user.model.UserModel
 import app.mistercooper.social.domain.home.model.PostModel
 import app.mistercooper.ui.common.components.LoadingComponent
@@ -38,13 +35,8 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.crossfade
 import coil3.util.DebugLogger
 import common.component.CommonScaffoldBottomBar
-import common.navigation.ArgumentNavigatorWrapper
-import common.navigation.BottomSheetRoute
-import common.navigation.CommentNavigationArgs.Companion.ON_DISMISS_KEY
-import common.navigation.CommentNavigationArgs.Companion.POST_ID_KEY
-import common.navigation.CommentNavigationArgs.Companion.WRITE_NOW_KEY
-import common.navigation.GlobalNavigator
 import common.navigation.NavigationRoute
+import common.navigation.NavigationRoute.COMMENTS
 import common.navigation.navigate
 import feed.viewmodel.HomeViewModel
 import kotlinproject.composeapp.generated.resources.Res
@@ -56,7 +48,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HomeScreen(globalNavigator: GlobalNavigator) {
+fun HomeScreen(globalNavigator: NavController) {
     val viewModel: HomeViewModel = koinViewModel()
     val state = viewModel.homeUiModel.collectAsState()
 
@@ -74,7 +66,7 @@ fun HomeScreen(globalNavigator: GlobalNavigator) {
         },
         showError = state.value.isError,
         actionFloatingButton = {
-            globalNavigator.nativeController.navigate(NavigationRoute.PUBLISH_NOW)
+            globalNavigator.navigate(NavigationRoute.PUBLISH_NOW)
         },
         iconVectorFloatingButton = Icons.Rounded.Add
     )
@@ -83,7 +75,7 @@ fun HomeScreen(globalNavigator: GlobalNavigator) {
 @Composable
 fun HomeFeedView(
     postModels: List<PostModel>?,
-    globalNavigator: GlobalNavigator,
+    globalNavigator: NavController,
     modifier: Modifier = Modifier,
     publishLike: (id: Long, like: Boolean) -> Unit
 ) {
@@ -122,9 +114,9 @@ fun HomeFeedView(
                         )
                     }
                     InteractionIconsComponent(
-                        globalNavigator,
-                        post,
-                        { id, like -> publishLike(id, like) })
+                        post = post,
+                        publishLike = { id, like -> publishLike(id, like) },
+                        showComments = { globalNavigator.navigate(COMMENTS, post.id) })
                     if (post.description?.isNotEmpty() == true) {
                         Text(
                             text = post.description!!,
@@ -132,17 +124,6 @@ fun HomeFeedView(
                         )
                     }
                     if (post.totalComments > 0) {
-                        var showComments: Boolean by remember { mutableStateOf(false) }
-                        if (showComments) {
-                            globalNavigator.customNavigator.showBottomSheet(
-                                BottomSheetRoute.COMMENTS,
-                                mapOf(POST_ID_KEY to ArgumentNavigatorWrapper.LongArg(post.id),
-                                    WRITE_NOW_KEY to ArgumentNavigatorWrapper.BooleanArg(false),
-                                    ON_DISMISS_KEY to ArgumentNavigatorWrapper.FunctionArg {
-                                        showComments = false
-                                    })
-                            )
-                        }
                         Text(
                             text = stringResource(
                                 Res.string.post_comments_total,
@@ -151,7 +132,7 @@ fun HomeFeedView(
                             modifier = Modifier
                                 .padding(4.dp)
                                 .clickable {
-                                    showComments = true
+                                    globalNavigator.navigate(COMMENTS, post.id)
                                 },
                             style = MaterialTheme.typography.caption
                         )
@@ -159,6 +140,7 @@ fun HomeFeedView(
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }
+
         }
     }
 }
@@ -175,12 +157,11 @@ fun UserComponent(userModel: UserModel) {
 
 @Composable
 fun InteractionIconsComponent(
-    globalNavigator: GlobalNavigator,
     post: PostModel,
-    publishLike: (id: Long, like: Boolean) -> Unit
+    publishLike: (id: Long, like: Boolean) -> Unit,
+    showComments: () -> Unit
 ) {
     Row {
-        var showComments: Boolean by remember { mutableStateOf(false) }
         Icon(
             imageVector = if (post.hasLiked) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
             contentDescription = stringResource(Res.string.like),
@@ -196,18 +177,8 @@ fun InteractionIconsComponent(
             modifier = Modifier
                 .padding(4.dp)
                 .clickable {
-                    showComments = true
+                    showComments()
                 }
         )
-        if (showComments) {
-            globalNavigator.customNavigator.showBottomSheet(
-                BottomSheetRoute.COMMENTS,
-                mapOf(POST_ID_KEY to ArgumentNavigatorWrapper.LongArg(post.id),
-                    WRITE_NOW_KEY to ArgumentNavigatorWrapper.BooleanArg(true),
-                    ON_DISMISS_KEY to ArgumentNavigatorWrapper.FunctionArg {
-                        showComments = false
-                    })
-            )
-        }
     }
 }

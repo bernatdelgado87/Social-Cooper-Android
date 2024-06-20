@@ -24,7 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import common.navigation.GlobalNavigator
+import androidx.navigation.NavController
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.back
 import kotlinproject.composeapp.generated.resources.error_message
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun CommonScaffoldTopBar(globalNavigator: GlobalNavigator, topBarTitle: String, showError: Boolean, content: @Composable (modifier: Modifier) -> Unit, actions: @Composable RowScope.() -> Unit = {}){
+fun CommonScaffoldTopBar(globalNavigator: NavController, topBarTitle: String, showError: Boolean, content: @Composable (modifier: Modifier) -> Unit, actions: @Composable RowScope.() -> Unit = {}){
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
@@ -42,9 +42,9 @@ fun CommonScaffoldTopBar(globalNavigator: GlobalNavigator, topBarTitle: String, 
         topBar = {
             TopAppBar(
                 title = { Text(text = topBarTitle) },
-                navigationIcon = if (globalNavigator.nativeController.previousBackStackEntry != null) {
+                navigationIcon = if (globalNavigator.previousBackStackEntry != null) {
                     {
-                        IconButton(onClick = { globalNavigator.nativeController.navigateUp() }) {
+                        IconButton(onClick = { globalNavigator.navigateUp() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                                 contentDescription = stringResource(Res.string.back)

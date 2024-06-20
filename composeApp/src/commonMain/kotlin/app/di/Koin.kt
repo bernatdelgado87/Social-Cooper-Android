@@ -15,7 +15,6 @@ import registerLogin.viewmodel.RegisterLoginViewModel
 import comment.viewmodel.CommentViewModel
 import publish.viewmodel.PublishViewModel
 import feed.viewmodel.HomeViewModel
-import main.di.appAndroidModule
 
 fun initKoin() = initKoin() {}
 
@@ -27,7 +26,6 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             mainDataModule,
             userModule,
             homeModule,
-            appAndroidModule,
             publishModule,
             commentModule,
             module {

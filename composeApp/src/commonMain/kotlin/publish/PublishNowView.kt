@@ -20,11 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import app.mistercooper.ui.common.components.LoadingComponent
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
 import common.component.SelectMediaComponent
-import common.navigation.GlobalNavigator
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.post_enter_text_hint
 import kotlinproject.composeapp.generated.resources.publish_action_button
@@ -35,7 +35,7 @@ import publish.viewmodel.PublishViewModel
 
 @Composable
 fun PublishHomeScreen(
-    globalNavigator: GlobalNavigator,
+    globalNavigator: NavController,
 ) {
     var canActivateButton by remember { mutableStateOf(false) }
     var text by remember { mutableStateOf("") }

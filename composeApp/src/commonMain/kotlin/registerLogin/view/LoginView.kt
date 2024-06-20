@@ -20,11 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import app.mistercooper.ui.common.components.LoadingComponent
 import registerLogin.viewmodel.RegisterLoginViewModel
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
-import common.navigation.GlobalNavigator
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.login_button
 import kotlinproject.composeapp.generated.resources.login_now_title
@@ -35,7 +35,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun LoginScreen(globalNavigator: GlobalNavigator) {
+fun LoginScreen(globalNavigator: NavController) {
     val viewModel = koinViewModel<RegisterLoginViewModel>()
     val state = viewModel.registerLoginState.collectAsState()
 

@@ -17,12 +17,8 @@ import coil3.compose.AsyncImage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-
 import androidx.compose.ui.unit.dp
-import coil3.compose.LocalPlatformContext
-import coil3.request.ImageRequest
-
-import common.navigation.GlobalNavigator
+import androidx.navigation.NavController
 import common.navigation.NavigationRoute
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.background_social
@@ -31,7 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun LoginOrRegisterScreen(globalNavigator: GlobalNavigator) {
+fun LoginOrRegisterScreen(globalNavigator: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()){
 
@@ -59,14 +55,14 @@ fun LoginOrRegisterScreen(globalNavigator: GlobalNavigator) {
                 modifier = Modifier
                     .padding(20.dp)
                     .fillMaxWidth(),
-                onClick = { globalNavigator.nativeController.navigate(NavigationRoute.REGISTER.name) }) {
+                onClick = { globalNavigator.navigate(NavigationRoute.REGISTER.name) }) {
                 Text(text = "Registrarse")
             }
             OutlinedButton(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth(),
-                onClick = { globalNavigator.nativeController.navigate(NavigationRoute.LOGIN.name) }) {
+                onClick = { globalNavigator.navigate(NavigationRoute.LOGIN.name) }) {
                 Text(text = "Login")
             }
         }
