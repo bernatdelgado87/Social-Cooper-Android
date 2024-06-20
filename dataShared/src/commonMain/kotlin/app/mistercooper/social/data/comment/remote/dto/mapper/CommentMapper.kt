@@ -3,6 +3,7 @@ package app.mistercooper.social.data.comment.remote.dto.mapper
 import app.mistercooper.social.data.comment.remote.dto.response.CommentDTO
 import app.mistercooper.social.data.comment.remote.dto.response.CommentResponseDTO
 import app.mistercooper.domain_shared_common.user.model.UserModel
+import app.mistercooper.social.data.home.remote.dto.mapper.toModel
 import app.mistercooper.social.domain.comment.model.CommentModel
 import app.mistercooper.social.domain.comment.model.CommentWrapperModel
 
@@ -17,5 +18,6 @@ fun CommentDTO.toModel() = CommentModel(
 )
 
 fun CommentResponseDTO.toModel() = CommentWrapperModel(
-    imageUrl,
-    comments.map { comment -> comment.toModel() })
+    post = multimediaModel.toModel(),
+    myImageUrl = userImageUrl,
+    comments = comments.map { comment -> comment.toModel() })

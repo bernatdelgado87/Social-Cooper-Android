@@ -37,8 +37,7 @@ fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: NavController) = run {
             globalNavigator = globalNavigator
         )
     }
-    composable(NavigationRoute.COMMENTS.name + "/{postId}") {
-        val args = listOf(navArgument("postId") {type = NavType.LongType})
+    composable(NavigationRoute.COMMENTS.name + "/{postId}", arguments = listOf(navArgument("postId") {type = NavType.LongType})) {
         val postId = requireNotNull(it.arguments?.getLong("postId"))
         CommentsScreen(
             postId,

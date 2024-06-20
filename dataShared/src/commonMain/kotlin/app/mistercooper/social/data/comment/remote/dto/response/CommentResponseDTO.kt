@@ -1,11 +1,13 @@
 package app.mistercooper.social.data.comment.remote.dto.response
 
+import app.mistercooper.social.data.home.remote.dto.response.MultimediaDTO
 import com.jetbrains.kmpapp.remote.dto.UserDTO
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class CommentResponseDTO (
-    val imageUrl: String,
+    val multimediaModel: MultimediaDTO,
+    val userImageUrl: String,
     val comments: List<CommentDTO>
 )
 @Serializable

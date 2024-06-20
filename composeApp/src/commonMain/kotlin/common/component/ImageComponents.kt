@@ -10,10 +10,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 
 @Composable
 fun UserMiniatureComponent(imageUrl: String) {
-   /* AsyncImage(
+    AsyncImage(
         model = imageUrl,
         contentDescription = "",
         contentScale = ContentScale.Crop,
@@ -22,5 +23,5 @@ fun UserMiniatureComponent(imageUrl: String) {
             .border(2.dp, Color.Gray, CircleShape)
             .height(40.dp)
             .width(40.dp)
-    )*/
+    )
 }

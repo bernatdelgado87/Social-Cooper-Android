@@ -3,6 +3,7 @@ package comment
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -17,7 +18,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Send
+import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,6 +32,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.mistercooper.social.domain.comment.model.CommentModel
+import app.mistercooper.ui.common.components.UserMiniatureComponent
 import app.mistercooper.ui_comment_shared.model.PublishCommentUiModel
 import comment.viewmodel.CommentViewModel
 import common.component.CustomTextField
@@ -40,6 +42,7 @@ import kotlinproject.composeapp.generated.resources.comment_hint
 import kotlinproject.composeapp.generated.resources.comments_empty_body
 import kotlinproject.composeapp.generated.resources.comments_empty_title
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -49,14 +52,19 @@ fun CommentsScreen(
 ) {
     val viewModel: CommentViewModel = koinViewModel()
     val viewModelState = viewModel.commentUiModel.collectAsState()
+    if (viewModelState.value.commentWrapper == null){
+        viewModel.getComments(postId)
+    }
+    CommentsComponent(postId, false, viewModelState.value, { postId -> viewModel.getComments(postId) }, {text, postId -> viewModel.publishComment(text, postId) })
+}
 
-
-    viewModel.getComments(postId)
+@Composable
+fun CommentsComponent(postId: Long, showKeyboard: Boolean = false, publishCommentUiModel: PublishCommentUiModel, getComments: (postId: Long) -> Unit, publishComment: (text: String, postId: Long) -> Unit){
     Box(modifier = Modifier.fillMaxSize()) {
-        viewModelState.value.commentWrapper?.let {
-            if (viewModelState.value.commentWrapper!!.comments.isNotEmpty()) {
-                CommentsListComponent(comments = viewModelState.value.commentWrapper?.comments) {
-                    viewModel.getComments(
+        publishCommentUiModel.commentWrapper?.let {
+            if (publishCommentUiModel.commentWrapper.comments.isNotEmpty()) {
+                CommentsListComponent(comments = publishCommentUiModel.commentWrapper?.comments) {
+                    getComments(
                         postId
                     )
                 }
@@ -84,8 +92,8 @@ fun CommentsScreen(
                 }
             }
         }
-        CommentsFooterComponent(postId, writeNow, viewModelState.value) { text, id ->
-            viewModel.publishComment(
+        CommentsFooterComponent(postId, showKeyboard, publishCommentUiModel) { text, id ->
+            publishComment(
                 text,
                 id
             )
@@ -102,7 +110,7 @@ fun CommentsListComponent(comments: List<CommentModel>?, getComments: () -> Unit
         LazyColumn() {
             items(comments) { comment ->
                 Row(modifier = Modifier.padding(vertical = 10.dp)) {
-                    app.mistercooper.ui.common.components.UserMiniatureComponent(comment.user.imageProfileUrl.orEmpty())
+                    UserMiniatureComponent(comment.user.imageProfileUrl.orEmpty())
                     Column {
                         Row {
                             Text(
@@ -112,7 +120,7 @@ fun CommentsListComponent(comments: List<CommentModel>?, getComments: () -> Unit
                             )
                             Text(
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                text = comment.date.toString(),
+                                text = comment.date,
                                 style = MaterialTheme.typography.body1,
                                 maxLines = 1
                             )
@@ -133,7 +141,7 @@ fun CommentsListComponent(comments: List<CommentModel>?, getComments: () -> Unit
 }
 
 @Composable
-fun CommentsFooterComponent(
+fun BoxScope.CommentsFooterComponent(
     postId: Long,
     showKeyboard: Boolean,
     uiState: PublishCommentUiModel,
@@ -144,6 +152,7 @@ fun CommentsFooterComponent(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .align(Alignment.BottomStart)
     ) {
         Box(
             modifier = Modifier
@@ -153,8 +162,7 @@ fun CommentsFooterComponent(
 
         ) {
             Row(Modifier.fillMaxWidth()) {
-
-                app.mistercooper.ui.common.components.UserMiniatureComponent(uiState.commentWrapper?.myImageUrl.orEmpty())
+                UserMiniatureComponent(uiState.commentWrapper?.myImageUrl.orEmpty())
                 var commentText by remember { mutableStateOf("") }
                 CustomTextField(
                     modifier = Modifier
@@ -170,7 +178,7 @@ fun CommentsFooterComponent(
                     AnimatedLoadingPublishComment()
                 } else {
                     Icon(
-                        Icons.Rounded.Send,
+                        Icons.AutoMirrored.Rounded.Send,
                         contentDescription = stringResource(Res.string.comment),
                         modifier = Modifier
                             .padding(4.dp)

@@ -1,5 +1,6 @@
 package app.mistercooper.social.data.home.remote.dto.response
 
+import com.jetbrains.kmpapp.remote.dto.UserDTO
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,7 +12,7 @@ data class MultimediaFeedDTO(
 @Serializable
 data class MultimediaDTO (
     val id: Long,
-    val user: com.jetbrains.kmpapp.remote.dto.UserDTO,
+    val user: UserDTO,
     val description: String? = null,
     val relativeUrl: String,
     val absoluteUrl: String,
