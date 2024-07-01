@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import app.mistercooper.social.navigation.getNavGraphBuilder
 import app.mistercooper.ui.common.components.LoadingComponent
 import common.navigation.NavigationRoute
+import common.theme.MyTheme
 import main.viewModel.MainViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -20,7 +21,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    MyTheme {
         setImageLoader()
         Surface(
             modifier = Modifier.fillMaxSize(),

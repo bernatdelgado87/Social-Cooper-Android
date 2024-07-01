@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -55,6 +56,7 @@ kotlin {
             implementation(libs.coil.mp)
             implementation(libs.coil.network.ktor)
             implementation(libs.coil.compose)
+            implementation(compose.components.resources)
         }
     }
 }
@@ -63,9 +65,11 @@ android {
     namespace = "org.example.project"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["main"].apply {
+        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        res.srcDirs("src/commonMain/resources", "src/androidMain/res")
+        resources.srcDirs("src/commonMain/resources")
+    }
 
     defaultConfig {
         applicationId = "org.example.project"

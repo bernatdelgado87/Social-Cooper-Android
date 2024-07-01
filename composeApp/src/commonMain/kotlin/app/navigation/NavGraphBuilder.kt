@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import app.mistercooper.ui.registerlogin.LoginOrRegisterScreen
+import registerLogin.view.LoginOrRegisterScreen
 import app.mistercooper.ui.registerlogin.LoginScreen
 import app.mistercooper.ui.registerlogin.RegisterScreen
 import comment.CommentsScreen
