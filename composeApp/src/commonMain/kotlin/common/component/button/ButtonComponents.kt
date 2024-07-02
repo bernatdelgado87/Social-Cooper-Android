@@ -1,24 +1,49 @@
 package common.component.button
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import common.navigation.NavigationRoute
 
 @Composable
-fun PrimaryButton(modifier: Modifier = Modifier, onClick: () -> Unit){
+fun PrimaryButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Button(
         modifier = modifier
             .padding(20.dp)
             .fillMaxWidth(),
-        colors =  ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+        shape = RoundedCornerShape(30),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
         onClick = { onClick() }) {
-        Text(text = "Registrarse")
+        TextButton(text)
     }
+}
+
+@Composable
+fun TransparentButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    OutlinedButton(
+        modifier = modifier
+            .padding(20.dp)
+            .fillMaxWidth(),
+        border = BorderStroke(1.dp, MaterialTheme.colors.primary),
+        shape = RoundedCornerShape(30),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.primary),
+        onClick = { onClick() }) {
+
+        TextButton(text)
+    }
+}
+
+@Composable
+private fun TextButton(text: String) {
+    Text(modifier = Modifier.padding(8.dp),
+        text = text,
+        style = MaterialTheme.typography.body1)
 }
