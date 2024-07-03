@@ -1,4 +1,4 @@
-package app.mistercooper.ui.registerlogin
+package registerLogin.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,10 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.mistercooper.social.navigation.restartNavigation
 import app.mistercooper.ui.common.components.LoadingComponent
-import registerLogin.viewmodel.RegisterLoginViewModel
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
+import common.component.TextType
+import common.component.button.PrimaryButton
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.login_button
 import kotlinproject.composeapp.generated.resources.login_now_title
@@ -33,6 +34,7 @@ import kotlinproject.composeapp.generated.resources.register_email
 import kotlinproject.composeapp.generated.resources.register_password
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import registerLogin.viewmodel.RegisterLoginViewModel
 
 @Composable
 fun LoginScreen(globalNavigator: NavController) {
@@ -46,8 +48,7 @@ fun LoginScreen(globalNavigator: NavController) {
     canActivateButton = email.isNotEmpty() && password.isNotEmpty()
 
     if (state.value.registerLoginSuccess) {
-      /* fixme!!!  val context = LocalContext.current
-        context.restartCurrentActivity()*/
+        globalNavigator.restartNavigation()
     }
 
     CommonScaffoldTopBar(
@@ -63,12 +64,14 @@ fun LoginScreen(globalNavigator: NavController) {
             ) {
 
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        modifier = Modifier.padding(20.dp),
+                        modifier = Modifier.padding(vertical = 40.dp),
                         text = stringResource(Res.string.login_now_title),
                         style = MaterialTheme.typography.h1
                     )
@@ -83,7 +86,7 @@ fun LoginScreen(globalNavigator: NavController) {
                         },
                         showKeyboard = false,
                         placeholderText = stringResource(Res.string.register_email),
-                        //fixme type = TextType.EMAIL
+                        type = TextType.EMAIL
                     )
 
                     CustomTextField(
@@ -96,21 +99,18 @@ fun LoginScreen(globalNavigator: NavController) {
                         },
                         showKeyboard = false,
                         placeholderText = stringResource(Res.string.register_password),
-                        //fixme type = TextType.PASSWORD
+                        type = TextType.PASSWORD
                     )
-                    Button(
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth(),
+                    PrimaryButton(
                         enabled = canActivateButton,
                         onClick = {
                             viewModel.login(
                                 email = email,
                                 password = password
                             )
-                        }) {
-                        Text(text = stringResource(Res.string.login_button))
-                    }
+                        },
+                        text = stringResource(Res.string.login_button)
+                    )
                     if (state.value.loading) {
                         LoadingComponent()
                     }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,16 +15,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,39 +35,54 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.mistercooper.social.domain.comment.model.CommentModel
+import androidx.navigation.NavController
+import app.mistercooper.social.domain.comment.model.CommentWrapperModel
 import app.mistercooper.ui.common.components.UserMiniatureComponent
 import app.mistercooper.ui_comment_shared.model.PublishCommentUiModel
 import comment.viewmodel.CommentViewModel
+import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
+import common.component.post.PostComponent
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.comment
 import kotlinproject.composeapp.generated.resources.comment_hint
 import kotlinproject.composeapp.generated.resources.comments_empty_body
 import kotlinproject.composeapp.generated.resources.comments_empty_title
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CommentsScreen(
     postId: Long,
-    writeNow: Boolean,
+    navController: NavController
 ) {
     val viewModel: CommentViewModel = koinViewModel()
     val viewModelState = viewModel.commentUiModel.collectAsState()
     if (viewModelState.value.commentWrapper == null){
         viewModel.getComments(postId)
     }
-    CommentsComponent(postId, false, viewModelState.value, { postId -> viewModel.getComments(postId) }, {text, postId -> viewModel.publishComment(text, postId) })
+    CommonScaffoldTopBar(
+        globalNavigator = navController,
+        topBarTitle = stringResource(Res.string.comment),
+        content = { modifier ->
+            CommentsComponent(
+                postId,
+                false,
+                viewModelState.value,
+                navController,
+                { postId -> viewModel.getComments(postId) },
+                { text, postId -> viewModel.publishComment(text, postId) },
+                { viewModel.resetValue() })
+        },
+        showError = viewModelState.value.isError)
 }
 
 @Composable
-fun CommentsComponent(postId: Long, showKeyboard: Boolean = false, publishCommentUiModel: PublishCommentUiModel, getComments: (postId: Long) -> Unit, publishComment: (text: String, postId: Long) -> Unit){
+fun CommentsComponent(postId: Long, showKeyboard: Boolean = false, publishCommentUiModel: PublishCommentUiModel, navController: NavController, getComments: (postId: Long) -> Unit, publishComment: (text: String, postId: Long) -> Unit, resetValue: () -> Unit){
     Box(modifier = Modifier.fillMaxSize()) {
         publishCommentUiModel.commentWrapper?.let {
             if (publishCommentUiModel.commentWrapper.comments.isNotEmpty()) {
-                CommentsListComponent(comments = publishCommentUiModel.commentWrapper?.comments) {
+                CommentsListComponent(commentWrapper = publishCommentUiModel.commentWrapper, navController) {
                     getComments(
                         postId
                     )
@@ -92,36 +111,48 @@ fun CommentsComponent(postId: Long, showKeyboard: Boolean = false, publishCommen
                 }
             }
         }
-        CommentsFooterComponent(postId, showKeyboard, publishCommentUiModel) { text, id ->
+        CommentsFooterComponent(postId, showKeyboard, publishCommentUiModel, publishCommentUiModel.isPublished, { text, id ->
             publishComment(
                 text,
-                id
+                id,
             )
-        }
+        },{ resetValue()})
     }
 }
 
 
 @Composable
-fun CommentsListComponent(comments: List<CommentModel>?, getComments: () -> Unit) {
-    if (comments == null) {
+fun CommentsListComponent(commentWrapper: CommentWrapperModel?, navController: NavController, getComments: () -> Unit) {
+    if (commentWrapper == null) {
         getComments()
     } else {
-        LazyColumn() {
-            items(comments) { comment ->
-                Row(modifier = Modifier.padding(vertical = 10.dp)) {
+        val lazyColumnListState = rememberLazyListState().apply {
+            LaunchedEffect(commentWrapper.comments.size) {
+                animateScrollToItem(commentWrapper.comments.size)
+            }
+        }
+        LazyColumn(contentPadding = PaddingValues(bottom = 200.dp), state = lazyColumnListState) {
+            item {
+             PostComponent(commentWrapper.post, navController, modifier = Modifier.fillMaxHeight(0.5f))
+            }
+            items(commentWrapper.comments) { comment ->
+                Row(modifier = Modifier.padding(vertical = 10.dp, horizontal = 16.dp)) {
                     UserMiniatureComponent(comment.user.imageProfileUrl.orEmpty())
                     Column {
                         Row {
                             Text(
-                                modifier = Modifier.padding(horizontal = 8.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .align(Alignment.Bottom),
                                 text = comment.user.userName.orEmpty(),
                                 style = MaterialTheme.typography.h6
                             )
                             Text(
-                                modifier = Modifier.padding(horizontal = 8.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .align(Alignment.Bottom),
                                 text = comment.date,
-                                style = MaterialTheme.typography.body1,
+                                style = MaterialTheme.typography.body2,
                                 maxLines = 1
                             )
                         }
@@ -145,7 +176,9 @@ fun BoxScope.CommentsFooterComponent(
     postId: Long,
     showKeyboard: Boolean,
     uiState: PublishCommentUiModel,
+    resetText: Boolean,
     publishComment: (commentText: String, postId: Long) -> Unit,
+    resetValue: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -172,8 +205,13 @@ fun BoxScope.CommentsFooterComponent(
                     onTextChanged = { newText -> commentText = newText },
                     showKeyboard,
                     stringResource(Res.string.comment_hint),
-                    singleLine = false
+                    singleLine = false,
+                    initialText = commentText
                 )
+                if (resetText){
+                    commentText = ""
+                    resetValue()
+                }
                 if (uiState.isLoadingPublish) {
                     AnimatedLoadingPublishComment()
                 } else {

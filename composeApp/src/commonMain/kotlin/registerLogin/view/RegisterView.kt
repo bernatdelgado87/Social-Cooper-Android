@@ -1,4 +1,4 @@
-package app.mistercooper.ui.registerlogin
+package registerLogin.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,11 +21,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.mistercooper.social.navigation.restartNavigation
 import app.mistercooper.ui.common.components.LoadingComponent
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
 import common.component.SelectMediaComponent
 import common.component.TextType
+import common.component.button.PrimaryButton
+import common.navigation.NavigationRoute
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.register_button
 import kotlinproject.composeapp.generated.resources.register_email
@@ -55,9 +57,7 @@ fun RegisterScreen(
     canActivateButton = email.isNotEmpty() && password.isNotEmpty() && imageByteArray != null
 
     if (state.value.registerLoginSuccess) {
-        //todo find a better solution for reset activity
-        //fixme !! val context = LocalContext.current
-        //fixme !!  context.restartCurrentActivity()
+        globalNavigator.restartNavigation()
     }
 
     CommonScaffoldTopBar(
@@ -78,7 +78,7 @@ fun RegisterScreen(
                     Text(
                         modifier = Modifier.padding(20.dp),
                         text = stringResource(Res.string.registration_registrate_now_title),
-                        style = MaterialTheme.typography.h5
+                        style = MaterialTheme.typography.h1
                     )
                     SelectMediaComponent(imageBitmap, onImageSelected = { pair ->
                         imageBitmap = pair?.second
@@ -121,11 +121,12 @@ fun RegisterScreen(
                         placeholderText = stringResource(Res.string.register_password),
                         type = TextType.PASSWORD
                     )
-                    Button(
+                    PrimaryButton(
                         modifier = Modifier
                             .padding(20.dp)
                             .fillMaxWidth(),
                         enabled = canActivateButton,
+                        text = stringResource(Res.string.register_button),
                         onClick = {
                             imageByteArray?.let {
                                 viewModel.registerUser(
@@ -135,9 +136,7 @@ fun RegisterScreen(
                                     file = imageByteArray!!
                                 )
                             }
-                        }) {
-                        Text(text = stringResource(Res.string.register_button))
-                    }
+                        })
                     if (state.value.loading) {
                         LoadingComponent()
                     }

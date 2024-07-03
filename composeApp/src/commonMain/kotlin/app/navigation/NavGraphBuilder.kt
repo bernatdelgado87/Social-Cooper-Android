@@ -6,8 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import registerLogin.view.LoginOrRegisterScreen
-import app.mistercooper.ui.registerlogin.LoginScreen
-import app.mistercooper.ui.registerlogin.RegisterScreen
+import registerLogin.view.LoginScreen
+import registerLogin.view.RegisterScreen
 import comment.CommentsScreen
 import common.navigation.NavigationRoute
 import feed.HomeScreen
@@ -41,9 +41,15 @@ fun NavGraphBuilder.getNavGraphBuilder(globalNavigator: NavController) = run {
         val postId = requireNotNull(it.arguments?.getLong("postId"))
         CommentsScreen(
             postId,
-            true
+            globalNavigator
         )
     }
 
+}
+
+fun NavController.restartNavigation() {
+    navigate(NavigationRoute.HOME_FEED.name) {
+        popUpToRoute
+    }
 }
 

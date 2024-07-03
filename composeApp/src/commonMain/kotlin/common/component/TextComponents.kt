@@ -47,11 +47,15 @@ fun CustomTextField(
     showKeyboard: Boolean = false,
     placeholderText: String = "",
     singleLine: Boolean = true,
+    initialText: String? = null,
     type: TextType = TextType.TEXT,
     fontSize: TextUnit = MaterialTheme.typography.body1.fontSize
 ) {
     var hidePassword by rememberSaveable { mutableStateOf(type == TextType.PASSWORD) }
     var text by rememberSaveable { mutableStateOf("") }
+    if(initialText != null){
+        text = initialText
+    }
     val focusRequester = remember { FocusRequester() }
 
     if (showKeyboard) {
@@ -73,7 +77,7 @@ fun CustomTextField(
         },
         singleLine = singleLine,
         cursorBrush = SolidColor(MaterialTheme.colors.primary),
-        textStyle = LocalTextStyle.current.copy(
+        textStyle = MaterialTheme.typography.body1.copy(
             color = MaterialTheme.colors.onSurface,
             fontSize = fontSize
         ),
@@ -88,7 +92,7 @@ fun CustomTextField(
                 Box(Modifier.weight(1f)) {
                     if (text.isEmpty()) Text(
                         placeholderText,
-                        style = LocalTextStyle.current.copy(
+                        style = MaterialTheme.typography.body1.copy(
                             color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
                             fontSize = fontSize
                         )

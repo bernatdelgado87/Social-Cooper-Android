@@ -40,7 +40,7 @@ class CommentViewModel(
                 )
             }.collect {
                 _commentUiModelState.emit(
-                    PublishCommentUiModel(commentWrapper = it)
+                    PublishCommentUiModel(commentWrapper = it, isPublished = true)
                 )
             }
         }
@@ -71,6 +71,14 @@ class CommentViewModel(
                 }.collect { response ->
                     _commentUiModelState.emit(PublishCommentUiModel(commentWrapper = response))
                 }
+        }
+    }
+
+    fun resetValue(){
+        viewModelScope.launch {
+            _commentUiModelState.emit(
+                commentUiModel.value.copy(isPublished = false)
+            )
         }
     }
 }

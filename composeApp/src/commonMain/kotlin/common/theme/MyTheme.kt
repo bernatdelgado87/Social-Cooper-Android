@@ -12,6 +12,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.W600
+import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.sp
 import com.example.compose.backgroundDark
 import com.example.compose.backgroundLight
@@ -91,12 +93,22 @@ fun customTypography(): Typography {
             "poppins_bold", "poppins_bold", FontWeight.Normal, FontStyle.Normal
         )
     )
+    val poppinsRegular = FontFamily(
+        font(
+            "poppins_medium", "poppins_medium", FontWeight.Normal, FontStyle.Normal
+        )
+    )
 
     return Typography(
         h1 = TextStyle(fontFamily = poppinsBold, fontSize = 32.sp),
         h2 = TextStyle(fontFamily = poppinsBold, fontSize = 26.sp),
         h3 = TextStyle(fontFamily = poppinsBold, fontSize = 22.sp),
-        body1 = TextStyle(fontFamily = muliRegular)
+        h4 = TextStyle(fontFamily = poppinsBold, fontSize = 18.sp),
+        h5 = TextStyle(fontFamily = muliRegular, fontSize = 18.sp, fontWeight = W700),
+        h6 = TextStyle(fontFamily = muliRegular, fontSize = 16.sp, fontWeight = W700),
+        body1 = TextStyle(fontFamily = muliRegular, fontSize = 18.sp),
+        body2 = TextStyle(fontFamily = muliRegular, fontSize = 14.sp),
+        caption = TextStyle(fontFamily = muliRegular, fontSize = 12.sp)
     )
 }
 

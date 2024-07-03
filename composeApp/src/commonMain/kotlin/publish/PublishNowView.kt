@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.mistercooper.social.navigation.restartNavigation
 import app.mistercooper.ui.common.components.LoadingComponent
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
@@ -48,8 +49,7 @@ fun PublishHomeScreen(
 
 
     if (publishState.value.postPublishedSuccess) {
-        /* fixme val context = LocalContext.current
-        context.restartCurrentActivity()*/
+        globalNavigator.restartNavigation()
     }
     CommonScaffoldTopBar(
         globalNavigator = globalNavigator,
