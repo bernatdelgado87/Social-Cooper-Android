@@ -6,7 +6,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import app.mistercooper.social.navigation.getNavGraphBuilder
@@ -15,7 +14,6 @@ import common.navigation.NavigationRoute
 import common.theme.MyTheme
 import main.viewModel.MainViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

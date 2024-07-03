@@ -28,7 +28,6 @@ import common.component.CustomTextField
 import common.component.SelectMediaComponent
 import common.component.TextType
 import common.component.button.PrimaryButton
-import common.navigation.NavigationRoute
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.register_button
 import kotlinproject.composeapp.generated.resources.register_email

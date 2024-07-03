@@ -6,15 +6,15 @@ import app.mistercooper.social.data.home.di.homeModule
 import app.mistercooper.social.data.main.di.mainDataModule
 import app.mistercooper.social.data.publish.di.publishModule
 import app.mistercooper.social.data.user.di.userModule
+import comment.viewmodel.CommentViewModel
+import feed.viewmodel.HomeViewModel
 import main.viewModel.MainViewModel
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import registerLogin.viewmodel.RegisterLoginViewModel
-import comment.viewmodel.CommentViewModel
 import publish.viewmodel.PublishViewModel
-import feed.viewmodel.HomeViewModel
+import registerLogin.viewmodel.RegisterLoginViewModel
 
 fun initKoin() = initKoin() {}
 

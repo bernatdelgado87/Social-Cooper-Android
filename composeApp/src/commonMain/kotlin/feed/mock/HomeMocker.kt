@@ -1,7 +1,7 @@
 package feed.mock
 
-import app.mistercooper.social.domain.home.model.PostModel
 import app.mistercooper.domain_shared_common.user.model.UserModel
+import app.mistercooper.social.domain.home.model.PostModel
 
 
 fun mockPosts() = listOf(
