@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -66,6 +67,7 @@ fun CommentsScreen(
         topBarTitle = stringResource(Res.string.comment),
         content = { modifier ->
             CommentsComponent(
+                Modifier.imePadding(),
                 postId,
                 false,
                 viewModelState.value,
@@ -78,8 +80,8 @@ fun CommentsScreen(
 }
 
 @Composable
-fun CommentsComponent(postId: Long, showKeyboard: Boolean = false, publishCommentUiModel: PublishCommentUiModel, navController: NavController, getComments: (postId: Long) -> Unit, publishComment: (text: String, postId: Long) -> Unit, resetValue: () -> Unit){
-    Box(modifier = Modifier.fillMaxSize()) {
+fun CommentsComponent(modifier: Modifier, postId: Long, showKeyboard: Boolean = false, publishCommentUiModel: PublishCommentUiModel, navController: NavController, getComments: (postId: Long) -> Unit, publishComment: (text: String, postId: Long) -> Unit, resetValue: () -> Unit){
+    Box(modifier = modifier.fillMaxSize()) {
         publishCommentUiModel.commentWrapper?.let {
             if (publishCommentUiModel.commentWrapper.comments.isNotEmpty()) {
                 CommentsListComponent(commentWrapper = publishCommentUiModel.commentWrapper, navController) {
