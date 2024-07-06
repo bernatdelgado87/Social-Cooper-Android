@@ -16,9 +16,9 @@ import org.koin.dsl.module
 import publish.viewmodel.PublishViewModel
 import registerLogin.viewmodel.RegisterLoginViewModel
 
-fun initKoin() = initKoin() {}
+fun initSocialKoin() = initSocialKoin() {}
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
+fun initSocialKoin(appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
         appDeclaration()
         modules(
