@@ -1,4 +1,4 @@
 import androidx.compose.ui.window.ComposeUIViewController
-import main.App
+import main.SocialApp
 
-fun MainViewController() = ComposeUIViewController { App() }
+fun MainViewController() = ComposeUIViewController { SocialApp() }

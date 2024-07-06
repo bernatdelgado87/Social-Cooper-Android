@@ -18,7 +18,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
-fun App() {
+fun SocialApp() {
     MyTheme {
         setImageLoader()
         Surface(
