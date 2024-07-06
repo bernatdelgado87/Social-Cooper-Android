@@ -34,7 +34,7 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
-            implementation(project(":domainShared"))
+            implementation(project(":Social-Cooper:domainShared"))
             implementation(libs.kmm.settings)
             implementation(libs.koin.core)
             implementation(libs.ktor.client.core)

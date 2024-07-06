@@ -25,9 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.back
-import kotlinproject.composeapp.generated.resources.error_message
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.back
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.error_message
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 

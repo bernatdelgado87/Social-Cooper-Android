@@ -26,10 +26,10 @@ import app.mistercooper.ui.common.components.LoadingComponent
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
 import common.component.SelectMediaComponent
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.post_enter_text_hint
-import kotlinproject.composeapp.generated.resources.publish_action_button
-import kotlinproject.composeapp.generated.resources.publish_now_title
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.post_enter_text_hint
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.publish_action_button
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.publish_now_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import publish.viewmodel.PublishViewModel

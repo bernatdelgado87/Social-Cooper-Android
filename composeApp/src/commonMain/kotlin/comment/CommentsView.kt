@@ -43,11 +43,11 @@ import comment.viewmodel.CommentViewModel
 import common.component.CommonScaffoldTopBar
 import common.component.CustomTextField
 import common.component.post.PostComponent
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.comment
-import kotlinproject.composeapp.generated.resources.comment_hint
-import kotlinproject.composeapp.generated.resources.comments_empty_body
-import kotlinproject.composeapp.generated.resources.comments_empty_title
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.comment
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.comment_hint
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.comments_empty_body
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.comments_empty_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 

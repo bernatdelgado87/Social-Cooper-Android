@@ -26,10 +26,10 @@ import common.media.PermissionType
 import common.media.createPermissionsManager
 import common.media.rememberCameraManager
 import common.media.rememberGalleryManager
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.img_placeholder_profile
-import kotlinproject.composeapp.generated.resources.select_image
-import kotlinproject.composeapp.generated.resources.your_photo_content_description
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.img_placeholder_profile
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.select_image
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.your_photo_content_description
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -28,9 +28,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.ic_visibility
-import kotlinproject.composeapp.generated.resources.ic_visibility_off
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.ic_visibility
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.ic_visibility_off
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

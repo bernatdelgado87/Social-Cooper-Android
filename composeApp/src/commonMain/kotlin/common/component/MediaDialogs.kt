@@ -29,10 +29,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.ic_add_photo
-import kotlinproject.composeapp.generated.resources.ic_camera
-import kotlinproject.composeapp.generated.resources.ic_visibility
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.ic_add_photo
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.ic_camera
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.ic_visibility
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

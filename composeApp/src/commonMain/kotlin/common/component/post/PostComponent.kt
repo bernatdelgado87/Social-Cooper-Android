@@ -29,12 +29,12 @@ import coil3.util.DebugLogger
 import common.navigation.NavigationRoute.COMMENTS
 import common.navigation.navigate
 import common.replaceParams
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.comment
-import kotlinproject.composeapp.generated.resources.img_placeholder_profile
-import kotlinproject.composeapp.generated.resources.like
-import kotlinproject.composeapp.generated.resources.post_comments_total
-import kotlinproject.composeapp.generated.resources.post_like_people
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.comment
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.img_placeholder_profile
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.like
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.post_comments_total
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.post_like_people
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

@@ -17,11 +17,11 @@ import androidx.navigation.NavController
 import common.component.button.PrimaryButton
 import common.component.button.TransparentButton
 import common.navigation.NavigationRoute
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.background_social
-import kotlinproject.composeapp.generated.resources.login_button
-import kotlinproject.composeapp.generated.resources.register_button
-import kotlinproject.composeapp.generated.resources.register_now_title
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.Res
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.background_social
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.login_button
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.register_button
+import kmp_app_template_native.social_cooper.composeapp.generated.resources.register_now_title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

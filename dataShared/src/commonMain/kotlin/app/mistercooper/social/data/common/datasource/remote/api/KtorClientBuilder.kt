@@ -15,10 +15,13 @@ fun createKtorClient(keyValueStorageInterface: KeyValueStorageInterface): HttpCl
     val json = Json { ignoreUnknownKeys = true }
     return HttpClient {
         defaultRequest {
-            header(HttpHeaders.ContentType, ContentType.Application.Json)
+           header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
         install(ContentNegotiation) {
+            //fixme!! delete this when all content be json
+            json(json, contentType = ContentType.Any)
             json(json, contentType = ContentType.Application.Json)
+
         }
         install(headerInterceptorCustomPlugin(keyValueStorageInterface))
     }

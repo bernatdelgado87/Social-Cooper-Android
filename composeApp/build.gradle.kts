@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kmp.skie)
@@ -38,8 +38,8 @@ kotlin {
             implementation(libs.accompanist.permissions)
         }
         commonMain.dependencies {
-            implementation (project(":domainShared"))
-            implementation (project(":dataShared"))
+            implementation (project(":Social-Cooper:domainShared"))
+            implementation (project(":Social-Cooper:dataShared"))
             implementation(libs.koin.composeVM)
             implementation(libs.koin.core)
             implementation(libs.lifecycle)
@@ -71,11 +71,8 @@ android {
     }
 
     defaultConfig {
-        applicationId = "org.example.project"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
     }
     packaging {
         resources {
