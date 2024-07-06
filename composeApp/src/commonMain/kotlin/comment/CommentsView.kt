@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -79,7 +80,7 @@ fun CommentsScreen(
 
 @Composable
 fun CommentsComponent(postId: Long, showKeyboard: Boolean = false, publishCommentUiModel: PublishCommentUiModel, navController: NavController, getComments: (postId: Long) -> Unit, publishComment: (text: String, postId: Long) -> Unit, resetValue: () -> Unit){
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().imePadding()) {
         publishCommentUiModel.commentWrapper?.let {
             if (publishCommentUiModel.commentWrapper.comments.isNotEmpty()) {
                 CommentsListComponent(commentWrapper = publishCommentUiModel.commentWrapper, navController) {
