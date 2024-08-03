@@ -1,11 +1,12 @@
-package app.mistercooper.domain_shared_common.user.usecase
+package app.mistercooper.social.domain.main.usecase
 
-import app.mistercooper.domain_shared_common.user.repository.MainRepository
+import app.mistercooper.social.domain.main.repository.MainRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+
 class IsUserRegisteredUseCase (val userRepository: MainRepository) {
-    operator fun invoke(): Flow<Boolean> {
+    fun run(): Flow<Boolean> {
         return flow { emit(userRepository.isUserRegistered()) }
     }
 
