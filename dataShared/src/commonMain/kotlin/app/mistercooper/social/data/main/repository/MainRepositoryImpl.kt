@@ -9,4 +9,7 @@ class MainRepositoryImpl (val localUserDataSource: KeyValueStorageInterface):
     override fun isUserRegistered(): Boolean =
         localUserDataSource.token?.isNotEmpty() == true
 
+    override fun isFullRegistered(): Boolean =
+        localUserDataSource.profileCompleted == true
+
 }

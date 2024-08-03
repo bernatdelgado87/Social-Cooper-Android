@@ -1,5 +1,6 @@
 package app.mistercooper.social.data.common.di
 
+import app.mistercooper.social.domain.main.usecase.IsFullRegisteredUseCase
 import app.mistercooper.social.domain.main.usecase.IsUserRegisteredUseCase
 import app.mistercooper.social.domain.registerLogin.repository.UserRepository
 import app.mistercooper.social.domain.registerLogin.usecase.LoginUseCase
@@ -13,6 +14,7 @@ import org.koin.dsl.module
 val commonModule = module {
     //main
     single<IsUserRegisteredUseCase> { IsUserRegisteredUseCase(get()) }
+    single<IsFullRegisteredUseCase> { IsFullRegisteredUseCase(get()) }
     single<KeyValueStorageInterface> { KeyValueStorageImpl() }
     single<HttpClient> { createKtorClient(get()) }
 

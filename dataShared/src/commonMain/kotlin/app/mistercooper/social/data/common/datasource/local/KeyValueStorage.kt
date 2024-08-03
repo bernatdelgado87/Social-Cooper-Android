@@ -6,12 +6,14 @@ import com.russhwolf.settings.set
 
 interface KeyValueStorageInterface {
     var token: String?
+    var profileCompleted: Boolean?
     fun cleanStorage()
 
 }
 
 enum class StorageKeys {
-    TOKEN;
+    TOKEN,
+    PROFILE_COMPLETED;
     val key get() = this.name
 
 }
@@ -24,6 +26,12 @@ class KeyValueStorageImpl : KeyValueStorageInterface {
         get() = settings[StorageKeys.TOKEN.key]
         set(value) {
             settings[StorageKeys.TOKEN.key] = value
+        }
+
+    override var profileCompleted: Boolean?
+        get() = settings[StorageKeys.PROFILE_COMPLETED.key]
+        set(value) {
+            settings[StorageKeys.PROFILE_COMPLETED.key] = value
         }
 
     override fun cleanStorage() {

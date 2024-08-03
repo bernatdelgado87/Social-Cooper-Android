@@ -3,9 +3,9 @@ package registerLogin.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.mistercooper.social.domain.registerLogin.model.LoginUserModel
-import app.mistercooper.social.domain.registerLogin.model.RegisterUserModel
+import app.mistercooper.social.domain.registerLogin.model.UpdateUserModel
 import app.mistercooper.social.domain.registerLogin.usecase.LoginUseCase
-import app.mistercooper.social.domain.registerLogin.usecase.RegisterUserUseCase
+import app.mistercooper.social.domain.registerLogin.usecase.UpdateExistingUserUseCase
 import app.mistercooper.ui_registerlogin_shared.model.RegisterLoginUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class RegisterLoginViewModel (
-    private val registerUserUseCase: RegisterUserUseCase,
+    private val updateUserUseCase: UpdateExistingUserUseCase,
     private val loginUseCase: LoginUseCase
     ) : ViewModel() {
 
@@ -22,10 +22,10 @@ class RegisterLoginViewModel (
     )
     val registerLoginState = _registerLoginUiModelState.asStateFlow()
 
-    fun registerUser(email: String, userName: String, password: String, file: ByteArray) {
+    fun registerExistingUser(email: String? = null, userName: String, password: String? = null, file: ByteArray) {
         viewModelScope.launch {
-            registerUserUseCase(
-                RegisterUserModel(
+            updateUserUseCase(
+                UpdateUserModel(
                     name = userName,
                     email = email,
                     password = password,

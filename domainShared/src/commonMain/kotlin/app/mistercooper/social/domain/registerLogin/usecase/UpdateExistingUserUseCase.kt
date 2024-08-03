@@ -5,7 +5,7 @@ import app.mistercooper.social.domain.registerLogin.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class RegisterUpdateExistingUserUseCase (val userRepository: UserRepository){
+class UpdateExistingUserUseCase (val userRepository: UserRepository){
     operator fun invoke(params: UpdateUserModel): Flow<Unit> {
         return flow { emit(userRepository.updateUser(params)) }
     }

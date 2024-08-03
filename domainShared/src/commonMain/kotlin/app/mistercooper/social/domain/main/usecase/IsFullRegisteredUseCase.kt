@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 
-class IsUserRegisteredUseCase (val userRepository: MainRepository) {
+class IsFullRegisteredUseCase (val userRepository: MainRepository) {
     fun run(): Flow<Boolean> {
-        return flow { emit(userRepository.isUserRegistered()) }
+        return flow { emit(userRepository.isFullRegistered()) }
     }
 
 }
