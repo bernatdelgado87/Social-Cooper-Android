@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
@@ -54,10 +55,8 @@ fun HomeFeedView(
     postModels?.let { posts ->
         LazyColumn(modifier) {
             items(posts) { post ->
-                Column(modifier = Modifier.fillMaxSize()) {
+                    val state = rememberLazyListState()
                     PostComponent(post, globalNavigator) { id, like -> publishLike(id, like) }
-                }
-
             }
         }
     }

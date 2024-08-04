@@ -11,13 +11,18 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 
 interface HomeRemoteApi {
-    suspend fun getSocialFeed(): MultimediaFeedDTO
+    suspend fun getSocialFeed(n: Int, offset: Int): MultimediaFeedDTO
     suspend fun publishLike(postId: Long, like: Boolean): LikeResponseDTO
 }
 class HomeApiImpl(private val client: HttpClient) : HomeRemoteApi {
-    override suspend fun getSocialFeed(): MultimediaFeedDTO {
+    override suspend fun getSocialFeed(n: Int, offset: Int): MultimediaFeedDTO {
         return try {
-            client.get(CommonApi.SOCIAL_API_URL + "feed").call.response.body<MultimediaFeedDTO>()
+            client.get(CommonApi.SOCIAL_API_URL + "feed"){
+                url {
+                    parameters.append("n", n.toString())
+                    parameters.append("offset", offset.toString())
+                }
+            }.call.response.body<MultimediaFeedDTO>()
         } catch (e: Exception) {
             throw e
         }

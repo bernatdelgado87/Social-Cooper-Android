@@ -7,10 +7,17 @@ import app.mistercooper.social.domain.home.model.FeedModel
 import app.mistercooper.social.domain.home.repository.HomeRepository
 
 class HomeRepositoryImpl(private val homeRemoteApi: HomeRemoteApi) : HomeRepository {
+    val n = 2
+    var offset = 0
+
     override suspend fun getFeed(): FeedModel {
         try {
-            val response = homeRemoteApi.getSocialFeed()
-            return response.toModel()
+            val response =  homeRemoteApi.getSocialFeed(
+                n = n,
+                offset = offset
+            ).toModel()
+            offset=+n
+            return response
             throw GlobalFailure.GlobalError()
         } catch (e: Exception) {
             e.printStackTrace()
